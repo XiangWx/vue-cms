@@ -1,21 +1,25 @@
-# vue_cms
+#  VUE_CMS  #
 
-> A Vue.js project
 
-## Build Setup
+###这是使用VUE搭建的购物商城网站###
 
-``` bash
-# install dependencies
-npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
+##MUI样式 ##
 
-# build for production with minification
-npm run build
+注意：MUI 不能用NPM下载，需要去GITHUB上把整个文件下载下来，再去里面找需要的样式
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+>导入MUI.CSS
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+>导入扩展字体的CSS
+
+####首页轮播图制作####
+ 1.通过mint-ui的swipe组件完成样式
+
+2.再通过vue-resource发送请求获取轮播图数据，进行渲染
+
+####首页九宫格部分的制作####
+
+1.mint-ui 没有需要的组件，所以这部分使用了mui的代码
+2.在mui中 grid 部分
+3.在控制台部分找到对应部分的样式 修改样式结构 并覆盖mui的默认样式
+
