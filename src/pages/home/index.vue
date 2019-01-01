@@ -92,12 +92,17 @@
             }
 
         .mui-grid-view.mui-grid-9{
+            background-color: #fff;
             img{
-           
             width: 60px;
-            height: 60px;
-                 
+            height: 60px;      
             }
+            .mui-media-body {
+            font-size: 13px;
+            }
+           .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+                border: 0;
+                }
         }
         }
     </style>
