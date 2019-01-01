@@ -1,12 +1,12 @@
 <template>
-  <div id="app">
+  <div id="app" class="app-container">
 		<!-- 头部header -->
     <mt-header fixed title="乐购商城-一个神奇的网站"></mt-header>
      
 
 		<!-- 底部tabBar -->
     <nav class="mui-bar mui-bar-tab">
-			<router-link class="mui-tab-item mui-active" to='/home'>
+			<router-link class="mui-tab-item" to='/home'>
 				<span class="mui-icon mui-icon-home"></span>
 				<span class="mui-tab-label">首页</span>
 			</router-link>
@@ -38,13 +38,11 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="less">
+  .app-container{
+		//处理header和轮播图间的空白距离 两种都可以
+		// overflow-x: hidden;
+		padding-top:40px;
+	}
+	
 </style>
