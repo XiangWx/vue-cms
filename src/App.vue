@@ -44,5 +44,20 @@ export default {
 		// overflow-x: hidden;
 		padding-top:40px;
 	}
+
+	//组件之间互相切换时候的动画效果
+	.v-enter{
+		opacity: 0;
+		transform:translateX(100%);
+		position: absolute;
+	}
+	.v-leave-to{
+		opacity: 0;
+		transform:translateX(-100%);
+	}
+	.v-enter-active,
+	.v-leave-active{
+		transition: all 6s ease;
+	}
 	
 </style>
