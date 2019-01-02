@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="app-container">
 		<!-- 头部header -->
-    <mt-header fixed title="乐购商城-一个神奇的网站"></mt-header>
+    <mt-header fixed title="乐购商城  ——  一个神奇的网站"></mt-header>
      
 
 		<!-- 底部tabBar -->
@@ -28,7 +28,10 @@
 
 		<!-- 中间区域 -->
 		<!-- 占位组件 -->
-		<router-view></router-view>
+		//加了动画 要放到transition标签内部
+		<transition>
+		<router-view></router-view>		
+		</transition>
   </div>
 </template>
 
@@ -41,23 +44,25 @@ export default {
 <style lang="less">
   .app-container{
 		//处理header和轮播图间的空白距离 两种都可以
-		// overflow-x: hidden;
-		padding-top:40px;
+		overflow-x: hidden;
+		//padding-top:40px;
+		padding-bottom: 50px;
 	}
 
 	//组件之间互相切换时候的动画效果
 	.v-enter{
 		opacity: 0;
 		transform:translateX(100%);
-		position: absolute;
+	
 	}
 	.v-leave-to{
 		opacity: 0;
 		transform:translateX(-100%);
+			position: absolute;
 	}
 	.v-enter-active,
 	.v-leave-active{
-		transition: all 6s ease;
+		transition: all .5s ease;
 	}
 	
 </style>
