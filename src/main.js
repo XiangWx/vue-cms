@@ -41,7 +41,7 @@ import './lib/mui/css/icons-extra.css'
 //导入评论部分的组件
 import comment from './components/common/comment'
 //定义全局组件 参数1 组件名 参数2 组件模板对象
-Vue.component('comment-box',comment)
+Vue.component('comment',comment)
 
 Vue.config.productionTip = false
 

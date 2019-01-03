@@ -64,23 +64,52 @@
 
 3.使用vue-resource 获取数据
 
-4.渲染到页面
+4.渲染到页面 用v-for 循环生成
 
 
 ##  配置全局域名 
+	
+1.全局配置请求的根路径：
 
+		Vue.http.options.root = 'http://www.xxx：xxxx'
+
+2.将post请求提交数据的方式改成传统表单方式提交：
+
+		Vue.http.options.emulateJSON = true
 
 ##  定义全局的过滤器 :dateFomate
 
-	安装   npm   i   moment
+安装   
+		
+		npm   i   moment
 
-	导入 import moment from ‘moment’
+导入格式化时间的插件 ：
+	
+		 import moment from ‘moment’
+
+定义全局的过滤器：参数1：过滤器名称 参数2：过滤器的回调函数
+（参数1：是过滤器管道符左边的数据，参数2：指定的格式）	
 
 		Vue.filter（'dateFomate',(content,pattern = "YYYY - MM -DD hh:mm:ss") =>{ 
 			return moment(content).format(pattern)
 		}）
 
 ##  新闻详情页面 
+	
+1.根据新闻资讯页面，传递过来的id值 
+
+2.通过 this.$route.params.id 获取到id	
+	
+
+##  抽离评论组件
+
+1.创建一个单独的 comment.vue 组件模板
+
+2.在需要用到comment 组件的页面中，手动导入 comment 组件
+
+3.在父组件中，使用 'components' 属性，将导入的 comment 组件，注册为自己的子组件
+
+4.再将注册组件的名称，以标签的形式，在页面中引用
 
 	
 	

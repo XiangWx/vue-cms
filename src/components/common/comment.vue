@@ -5,12 +5,12 @@
         <textarea placeholder="请输入评论内容，不超过120字" maxlength='120'> </textarea>
         <mt-button type="primary" size='large'>发表评论</mt-button>
         <div class="com-list">
-            <div class="com-item">
+            <div class="com-item" v-for='(item,index) in newComment' :key='item.add_time'>
                 <div class="com-tite">
-                    第1楼  用户：  发表时间：
+                    第 {{ index+1 }}楼  用户：{{ item.user_name}}  发表时间：{{ item.add_time | dateFormat}}
                 </div>
                 <div class="com-body">
-                    评论内容:
+                    评论内容: {{ item.content }}
                 </div>
             </div>
         </div>
@@ -25,16 +25,21 @@ export default {
     data(){
         return {
             newComment:[],
+            pageIndex:1,
+            artid:this.$route.params.id
            
         }
     },
+    created(){
+        this.getComment()
+    },
     methods:{
         getComment(){
-            this.$http.get('/api/getcomments/'+this.id + '?pageindex='+this.pageindex).then(result=>{
-                if(result.status==0){
+            this.$http.get('api/getcomments/'+this.artid + '?pageindex='+this.pageIndex).then(result=>{
+                if(result.body.status==0){
                     this.newComment = result.body.message
                 }else{
-                    Toast()
+                    Toast('评论加载失败')
                 }
     })
         }
@@ -50,7 +55,6 @@ export default {
             color: blueviolet;
         }
         textarea{
-            text-align: center;
             font-size: 14px;
             height: 80px;
             margin:0
