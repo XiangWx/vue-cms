@@ -17,12 +17,12 @@
                         <div class="mui-media-body">新闻资讯</div>
                     </router-link>
                 </li>
-                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                    <router-link to='#'>
-                          <img src="../../assets/images/menu2.png" alt="">
-                        <div class="mui-media-body">图片分享</div>
-                        </router-link>
-                        </li>
+                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <router-link to='/home/photoList'>
+                       <img src="../../assets/images/menu2.png" alt="">
+                        <div class="mui-media-body">图文列表</div>
+                    </router-link>
+                </li>
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                     <router-link to='#'>
                           <img src="../../assets/images/menu3.png" alt="">
@@ -65,7 +65,7 @@
         methods: {
             getSwipe(){
                 //发送get请求 获取轮播图数据
-                this.$http.get('http://www.lovegf.cn:8899/api/getlunbo').then(result=>{
+                this.$http.get('api/getlunbo').then(result=>{
                     //console.log(result) //数据都在result.body中
                     if(result.body.status == 0){
                         this.swipeList = result.body.message

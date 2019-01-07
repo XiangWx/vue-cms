@@ -111,8 +111,90 @@
 
 4.再将注册组件的名称，以标签的形式，在页面中引用
 
-	
-	
+##  点击加载更多加载评论
 
+1.给加载更多按钮,绑定点击事件
+
+2.点击之后,让pageindex++ 并且重新调用getComment()发起请求,获取数据
+
+3.防止新数据覆盖旧数据,用concat 原来的数据和新数据拼接新数组
+
+##  发表评论
+
+1.文本框做双向数据绑定
+
+2.给发表按钮绑定事件
+
+3.校验评论内容是否为空 为空就给出提示,并且return
+
+4.vue-resource 发送post请求,提交评论给服务器
+
+5.发表评论成功之后,需要重新刷新评论列表
 	
+##  绘制 图片列表 组件页面结构并美化样式
+
+ 1.  制作 顶部的滑动条
+ 
+> 需要借助于 MUI 中的 tab-top-webview-main.html 
+ 
+>需要把 slider 区域的 mui-fullscreen 类去掉
+ 
+ 2.  注意: mui 中使用了'arguments' 会报错,因为使用babel以上的时候,默认是开启了严格模式'use strict',所以要更改配置文件的设置,
+ 
+在.babelrc的配置文件中, 添加ignore节点:
+
+			{
+			  "presets": [
+			    ["env", {
+			      "modules": false,
+			      "targets": {
+			        "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+			      }
+			    }],
+			    "stage-2"
+			  ],
+			  "ignore": [
+			    "./src/lib/mui/js/mui.js"
+			  ]
+			}
+
+3. 制作 底部的图片列表
+
+##  制作图片列表区域
+
+1. 图片列表需要使用懒加载技术，我们可以使用 Mint-UI 提供的现成的 组件 `lazy-load`(按需引入,这个组件实现不了效果,所以要全部引入)
+
+2. 根据`lazy-load`的使用文档，尝试使用
+
+3. 渲染图片列表数据
+
+4. 页面一加载,第一项高亮,用index索引判断(不建议用id id也有可能会变动)
+ 
+   索引为0的默认高亮,
+
+	适合多个动态切换的样式, 少部分固定样式使用
+
+	 <a :class="{'mui-control-item':true,  'mui-active':index==0 }"   href='#' 
+       v-for="(item,index) in cates"  :key='item.id'> 
+          {{ item.title }}
+      </a>
+
+##  实现 图片详情中 缩略图的功能
+
+1. 使用 插件 vue-preview 这个缩略图插件
+
+	import  VuePreview from 'vue-preview'
+
+	Vue.use(VuePreview)
+
+
+2. 获取到所有的图片列表，然后使用 v-for 指令渲染数据
+
+3. 注意： img标签上的class不能去掉
+ 
+4. 注意： 每个 图片数据对象中，必须有 w 和 h 属性
+
+
+
+
 

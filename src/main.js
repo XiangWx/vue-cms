@@ -8,7 +8,7 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource);
 
 //全局配置请求的根路径
-Vue.http.options.root = 'http://www.lovegf.cn:8899'
+Vue.http.options.root = 'http://www.lovegf.cn:8899/'
 //将post请求提交数据的方式改成传统表单方式提交
 Vue.http.options.emulateJSON = true
 
@@ -42,6 +42,10 @@ import './lib/mui/css/icons-extra.css'
 import comment from './components/common/comment'
 //定义全局组件 参数1 组件名 参数2 组件模板对象
 Vue.component('comment',comment)
+
+//导入Lazyload
+import { Lazyload } from 'mint-ui';
+Vue.use(Lazyload);
 
 Vue.config.productionTip = false
 
