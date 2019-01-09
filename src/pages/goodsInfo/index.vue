@@ -1,5 +1,8 @@
 <template>
   <div class="goodsInfo-container">
+    <transition @before-enter='beforeEnter' @enter='enter' @after-enter='afterEnter'>
+      <div class="ball" v-show="isball" ref="ball"></div>
+    </transition>
     <div class="mui-card">
       <!--轮播图 mui库里面的卡片视图区域-->
       <div class="mui-card-content">
@@ -65,7 +68,9 @@ export default {
       lunbotu: [], //存放轮播图
       id: this.$route.params.id,
       goodsinfo:{}, //获取商品信息
-      buyCount:1 //默认购买件数1
+      buyCount:1, //默认购买件数1
+      isball:false,//控制小球的显示隐藏
+     
 
     };
   },
@@ -76,7 +81,9 @@ export default {
   methods: {
     getLunbotu() { //获取轮播图
       this.$http.get("api/getthumimages/" + this.id).then(result => {
-          this.lunbotu = result.body.message;
+          if(result.body.status == 0){
+            this.lunbotu = result.body.message;
+          }
       })
     },
   getGoodsInfo(){ //获取商品信息
@@ -97,7 +104,29 @@ export default {
 
   },
   addToShopCar(){ //加入购物车
+      this.isball = !this.isball
+  },
+  beforeEnter(el){
+    el.style.transform = 'translate(0,0)'
+  },
+  enter(el,done){
+    el.offsetWidth;
+    //1.获取小球在页面的位置
+    const ballPosition = this.$refs.ball.getBoundingClientRect();
+    //2.获取徽章所在的位置
+    console.log(document.getElementById("badge"))
+    const badgePosition = document.getElementById("badge").getBoundingClientRect();
 
+    const Xposition = badgePosition.left - ballPosition.left;
+    const Yposition = badgePosition.top - ballPosition.top;
+
+    el.style.transform = `translate(${Xposition}px,${Yposition}px`;
+    el.style.transition = 'all 0.5s cubic-bezier(.61,.12,.53,.18)';
+
+    done()
+  },
+  afterEnter(el){
+    this.isball = !this.isball
   }
 
   }
@@ -108,6 +137,8 @@ export default {
 .goodsInfo-container {
   background-color: #eee;
   overflow: hidden;
+  margin:0;
+ 
   .mint-swipe {
     height: 200px;
     text-align: center;
@@ -135,10 +166,20 @@ export default {
   }
   .mui-card-footer{
     display:block;
-    button{
-      margin:15px 0;
-    }
     
+    
+  }
+
+  .ball{
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    z-index:1;
+    top:335px;
+    left:170px
+
   }
 }
 </style>
