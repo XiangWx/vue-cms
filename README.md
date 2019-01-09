@@ -197,7 +197,7 @@
 
 ## 编程式的导航
 
-- 除了使用 <router-link> 创建 a 标签来定义导航链接，还可以借助 router 的实例方法，通过编写代码来实现
+- 除了使用 <router-link> 创建 a 标签来定义导航链接，还可以借助 router 的实例方法，通过编写代码来实现（goodsList 商品列表页 点击图片时跳转到goodsInfo页面 使用到）
 
 - 在 Vue 实例内部，通过 $router 访问路由实例。可以调用 this.$router.push
 
@@ -217,14 +217,18 @@
 
       console.log(this);
 
-       1. 最简单的 // 字符串
+       1. 最简单的   // 字符串
       this.$router.push("/home/goodsinfo/" + id);
 
-      2. 传递对象  // 对象 （如果使用path进行跳转，需要携带参数，必须自行手动拼接，path不能和params一起使用，如果传入了path 则params 无效）
+      2. 传递对象   // 对象 （如果使用path进行跳转，需要携带参数，必须自行手动拼接，path不能和params一起使用，如果传入了path 则params 无效）
       this.$router.push({ path: "/home/goodsinfo/" + id });
 
-      3. 传递命名的路由  // 命名的路由（params 只能和name同时使用）
+      3. 传递命名的路由   // 命名的路由（params 只能和name同时使用）
       this.$router.push({ name: "goodsinfo", params: { id } });
+
+ 这里面的name，要在router 中匹配好路由规则
+
+	{path:'/home/goodsDesc/:id',component:goodsDescCom,name:'goodsinfo'},
 
 ## 抽取组件要注意的事项
 
@@ -241,8 +245,14 @@
 	 .full {width: 100%;}
 
 	 <img :src="item.img" alt="" :class="{'full': isfull}">
+
+## 加入购物车
+
+## 购物车界面
+
+
 	
-遇到的问题：
+遇到的问题1：
 
  加入购物车时候，小圆球的初使位置，落脚位置都没有问题，小圆球样式都应用到了，但是不能正常显示在页面上
 
@@ -251,6 +261,12 @@
 解决办法：给app.vue或者小球的 transtion 标签中声明name 属性，这个name属性就是类样式的前缀
 
 		<transition name="app"></transition>
+
+遇到的问题2：
+
+加入购物车时候，同一个id的商品加入购物车时候，本应该只是count 数量上的增加，但在localStorage上出现两条商品记录
+
+原因是 判断id值是否相等的时候 使用了 === 而服务器端返回的数据类型有number也有string类型 用 == 就可以解决这个问题
 
 
 

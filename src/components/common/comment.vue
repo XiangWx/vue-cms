@@ -5,7 +5,7 @@
         <textarea placeholder="请输入评论内容，不超过120字" maxlength='120' v-model="msg"> </textarea>
         <mt-button type="primary" size='large' @click="postComment">发表评论</mt-button>
         <div class="com-list">
-            <div class="com-item" v-for='(item,index) in newComment' :key='item.add_time'>
+            <div class="com-item" v-for='(item,index) in newComment' :key='index'>
                 <div class="com-tite">
                     第 {{ index+1 }}楼  用户：{{ item.user_name}}  发表时间：{{ item.add_time | dateFormat}}
                 </div>
@@ -61,7 +61,7 @@ export default {
                     this.newComment = []  //清空当前页面的评论数据
                     this.pageIndex = 1 //重置为第一页
                     this.getComment()//重新获取数据
-                    this.msg='' 
+                    this.msg=''  //清空文本框内容
 
 
                 }

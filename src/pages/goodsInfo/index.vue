@@ -1,7 +1,7 @@
 <template>
   <div class="goodsInfo-container">
     <div class="mui-card">
-      <!--轮播图-->
+      <!--轮播图 mui库里面的卡片视图区域-->
       <div class="mui-card-content">
         <mt-swipe :auto="4000" :speed="300">
           <mt-swipe-item v-for="(item,index) in lunbotu" :key="index">
@@ -22,8 +22,8 @@
           </p>
           <div class="buy-count">购买数量：
             <div class="num-box">
-              <!-- || 一般用于默认值的处理 -->
-              <!-- && 如果前面的结果为false , 后面的代码就不会执行 -->
+              <!-- 手写input + - -->
+              <!-- || 一般用于默认值的处理  && 如果前面的结果为false , 后面的代码就不会执行 -->
               <input :disabled="buyCount <= 1" @click="buyCount > 1 && buyCount--" type="button"
                 value="-">
               <input type="text" v-model="buyCount">
@@ -64,25 +64,41 @@ export default {
     return {
       lunbotu: [], //存放轮播图
       id: this.$route.params.id,
-      goodsinfo:{} //获取商品信息
+      goodsinfo:{}, //获取商品信息
+      buyCount:1 //默认购买件数1
+
     };
   },
   created() {
     this.getLunbotu();
+    this.getGoodsInfo()
   },
   methods: {
-    getLunbotu() {
+    getLunbotu() { //获取轮播图
       this.$http.get("api/getthumimages/" + this.id).then(result => {
-        if (result.body.status === 0) {
-          // 先循环轮播图数组的每一项，为 item 添加 img 属性，因为 轮播图 组件中，只认识 item.img， 不认识 item.src
-          result.body.message.forEach(item => {
-            item.img = item.src;
-          });
           this.lunbotu = result.body.message;
-        }
       })
     },
+  getGoodsInfo(){ //获取商品信息
+    this.$http.get('api/goods/getinfo/'+this.id).then(result=>{
+       if(result.body.status == 0){
+          this.goodsinfo = result.body.message[0]
+       }
+    })
+  },
+  goDesc(id){ //使用js 编程式导航 点击跳转到图文介绍页面 不需要使用router-link
+    //this.$router.push('/home/goodsDesc'+id) 第一种 最简单的字符串拼接
+    this.$router.push({name:'goodsDesc',params:{ id } }) //第二种 命名的路由
 
+  },
+  goComment(id){ //点击之后 跳转到评论页面
+    this.$router.push({name:'goodsComment',params:{ id }})
+    
+
+  },
+  addToShopCar(){ //加入购物车
+
+  }
 
   }
 };
@@ -94,10 +110,35 @@ export default {
   overflow: hidden;
   .mint-swipe {
     height: 200px;
+    text-align: center;
     img {
       width: 340px;
       height: 200px;
     }
+  }
+  .buy-count{
+    padding:5px;
+    .num-box{
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    input[type="text"] {
+      width: 65px;
+      text-align: center;
+      height: 30px;
+    }
+    input[type="button"] {
+      width: 40px;
+      height: 100%;
+    }
+  }
+  }
+  .mui-card-footer{
+    display:block;
+    button{
+      margin:15px 0;
+    }
+    
   }
 }
 </style>
