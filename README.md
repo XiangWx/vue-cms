@@ -29,7 +29,7 @@
 >导入扩展字体的CSS
 
 
-##  设置当前选中tab栏选定样式   
+##  一。设置当前选中tab栏选定样式   
 
 > router-link 默认会有切换时的类样式, 当前显示的路由, 默认加上的类名为: router-link-active
 
@@ -42,13 +42,13 @@
 
  	在router文件中   linkActiveClass:'mui-active'
 
-##  首页轮播图制作
+##  二。 首页轮播图制作
 
  1.通过mint-ui的swipe组件完成样式
 
 2.再通过vue-resource发送请求获取轮播图数据，进行渲染
 
-##  首页九宫格部分的制作
+##  三。首页九宫格部分的制作
 
 1.mint-ui 没有需要的组件，所以这部分使用了mui的代码
 
@@ -56,7 +56,7 @@
 
 3.在控制台部分找到对应部分的样式 修改样式结构 并覆盖mui的默认样式
 
-##  新闻资讯部分
+##  四。新闻资讯部分
 
 1.点击首页新闻资讯 跳转到newsList页面（考虑到点击高亮问题 /home/newsList）
 
@@ -67,7 +67,7 @@
 4.渲染到页面 用v-for 循环生成
 
 
-##  配置全局域名 
+#  配置全局域名 
 	
 1.全局配置请求的根路径：
 
@@ -94,14 +94,14 @@
 			return moment(content).format(pattern)
 		}）
 
-##  新闻详情页面 
+##  五。新闻详情页面 
 	
 1.根据新闻资讯页面，传递过来的id值 
 
 2.通过 this.$route.params.id 获取到id	
 	
 
-##  抽离评论组件
+##  六。抽离评论组件
 
 1.创建一个单独的 comment.vue 组件模板
 
@@ -111,7 +111,7 @@
 
 4.再将注册组件的名称，以标签的形式，在页面中引用
 
-##  点击加载更多加载评论
+##  七。点击加载更多加载评论
 
 1.给加载更多按钮,绑定点击事件
 
@@ -119,7 +119,7 @@
 
 3.防止新数据覆盖旧数据,用concat 原来的数据和新数据拼接新数组
 
-##  发表评论
+##  八。发表评论
 
 1.文本框做双向数据绑定
 
@@ -131,7 +131,7 @@
 
 5.发表评论成功之后,需要重新刷新评论列表
 	
-##  绘制 图片列表 组件页面结构并美化样式
+##  九。绘制 图片列表 组件页面结构并美化样式
 
  1.  制作 顶部的滑动条
  
@@ -160,7 +160,7 @@
 
 3. 制作 底部的图片列表
 
-##  制作图片列表区域
+##  十。制作图片列表区域
 
 1. 图片列表需要使用懒加载技术，我们可以使用 Mint-UI 提供的现成的 组件 `lazy-load`(按需引入,这个组件实现不了效果,所以要全部引入)
 
@@ -179,23 +179,26 @@
           {{ item.title }}
       </a>
 
-##  实现 图片详情中 缩略图的功能
+##  十一。实现 图片详情中 缩略图的功能
 
-1. 使用 插件 vue-preview 这个缩略图插件
+1. 使用 插件 vue-preview（新版的是1.1.3 这里使用的老版本的1.0.2，github上已拉） 这个缩略图插件
 
-	import  VuePreview from 'vue-preview'
+	npm i vue2-preview -S
 
+	import  VuePreview from 'vue2-preview'
+	
 	Vue.use(VuePreview)
 
 
 2. 获取到所有的图片列表，然后使用 v-for 指令渲染数据
 
 3. 注意： img标签上的class不能去掉
+	 `<img class="preview-img>"`
  
-4. 注意： 每个 图片数据对象中，必须有 w 和 h 属性
+4. 注意： 每个 图片数据对象中，必须有 w 和 h  图片宽高两个属性
 
 
-## 编程式的导航
+#  编程式的导航
 
 - 除了使用 <router-link> 创建 a 标签来定义导航链接，还可以借助 router 的实例方法，通过编写代码来实现（goodsList 商品列表页 点击图片时跳转到goodsInfo页面 使用到）
 
@@ -230,7 +233,7 @@
 
 	{path:'/home/goodsDesc/:id',component:goodsDescCom,name:'goodsinfo'},
 
-## 抽取组件要注意的事项
+#  抽取组件要注意的事项
 
 如果抽取组件之后，使用的时候，有部分组件有冲突：
 
@@ -246,11 +249,70 @@
 
 	 <img :src="item.img" alt="" :class="{'full': isfull}">
 
-## 加入购物车
+##  十二。加入购物车
+
+-   使用MUI库里面的卡片视图组件
+  
+-   轮播图部分使用 Mint ui组件（记得加上宽高）
+  
+-   点击加入购物车，小圆球动画的实现：
+   
+		  <transition @before-enter='beforeEnter' @enter='enter' @after-enter='afterEnter'>
+	      <div class="ball" v-show="isball" ref="ball"></div>
+	      </transition>
+
+		 beforeEnter(el){
+		    el.style.transform = 'translate(0,0)'
+		  },
+		  enter(el,done){
+		    el.offsetWidth;
+		    //1.获取小球在页面的位置
+		    const ballPosition = this.$refs.ball.getBoundingClientRect();
+		    //2.获取徽章所在的位置
+		    console.log(document.getElementById("badge"))
+		    const badgePosition = document.getElementById("badge").getBoundingClientRect();
+		    const Xposition = badgePosition.left - ballPosition.left;
+		    const Yposition = badgePosition.top - ballPosition.top;
+	
+		    el.style.transform = `translate(${Xposition}px,${Yposition}px`;
+		    el.style.transition = 'all 0.5s cubic-bezier(.61,.12,.53,.18)';
+		    done()
+		  },
+		  afterEnter(el){
+		    this.isball = !this.isball
+		  }
 
 ## 购物车界面
 
+ 1.实现点击加入购物车按钮绑定事件，把购物车的信息存储到vuex的store中，
 
+		addToShopCar(){ //加入购物车
+	      this.isball = !this.isball  //徽章
+	      var appshopCar = { // 自己拼接出一个对象，保存到 vuex创建出来的store中
+	        id:this.id,
+	        count:this.buyCount,
+	        price:this.goodsinfo.sell_price,
+	        selected:true
+	      };
+	      //调用mutations中的方法
+	      this.$store.commit('addToCar',appshopCar)
+	  },
+
+	 在mutations 中 将car购物车信息存储到本地,键 值的形式（这个项目是本地用户）
+        localStorage.setItem('car',JSON.stringify(state.car))
+
+2.在store的getters 中 定义一个方法totalCount 获取存储的商品数量 
+
+ 在徽章组件 调用  `{{ $store.getters.totalCount }}`
+
+这样，当点击加入购物车时，state中的数据改变，getters中也会及时更新
+
+3.购物车商品数量 存储在本地的localStorage中 ，而我们的数据是从服务器端获取的，两者不同步，我们要从服务器端拿到数据之后，取出本地每一条商品对应的数量信息
+
+在getters中定义一个数据(函数), 在内部做一件事情:将本地存储的car中的每一条商品信息迭代循环, 取出每一个商品的id和count。
+
+将每一条商品的id作为键, count作为值, 创建一个新的对象, 最终结构为:
+  { 88: 2, 90: 1 }
 	
 ##  遇到的问题1：
 
@@ -264,7 +326,7 @@
 
 ##  遇到的问题2：
 
-加入购物车时候，同一个id的商品加入购物车时候，本应该只是count 数量上的增加，但在localStorage上出现两条商品记录
+加入购物车时候，同一个id的商品加入购物车时候，本应该只是count 数量上的增加，但在localStorage上却出现两条商品记录
 
 原因是 判断id值是否相等的时候 使用了 === 而服务器端返回的数据类型有number也有string类型 用 == 就可以解决这个问题
 
@@ -274,7 +336,11 @@
 
 原因：小圆球设置的是position：relative没有脱标，影响到了其他元素
 
-解决办法：设置position：absolute 脱标就可以了
+解决办法：给小球设置position：absolute 脱标就可以了
+
+##使用Mint ui中的轮播图组件时：
+
+记得给 img 加上宽高 才能正常显示
 
 
 

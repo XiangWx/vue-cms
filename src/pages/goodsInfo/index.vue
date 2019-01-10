@@ -105,6 +105,14 @@ export default {
   },
   addToShopCar(){ //加入购物车
       this.isball = !this.isball
+      var appshopCar = { //拼接出一个对象，要保存到 vux创建出来的store中
+        id:this.id,
+        count:this.buyCount,
+        price:this.goodsinfo.sell_price,
+        selected:true
+      };
+      //调用mutations中的方法
+      this.$store.commit('addToCar',appshopCar)
   },
   beforeEnter(el){
     el.style.transform = 'translate(0,0)'
@@ -114,7 +122,7 @@ export default {
     //1.获取小球在页面的位置
     const ballPosition = this.$refs.ball.getBoundingClientRect();
     //2.获取徽章所在的位置
-    console.log(document.getElementById("badge"))
+    //console.log(document.getElementById("badge"))
     const badgePosition = document.getElementById("badge").getBoundingClientRect();
 
     const Xposition = badgePosition.left - ballPosition.left;
@@ -134,6 +142,7 @@ export default {
 </script>
 
 <style lang='less'>
+
 .goodsInfo-container {
   background-color: #eee;
   overflow: hidden;
@@ -182,4 +191,5 @@ export default {
 
   }
 }
+
 </style>
