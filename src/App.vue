@@ -1,7 +1,14 @@
 <template>
   <div id="app" class="app-container">
 		<!-- 头部header -->
-    <mt-header fixed title="乐购商城  ——  一个神奇的网站"></mt-header>
+    <mt-header fixed title="乐购商城  ——  一个神奇的网站">
+		<span 
+		v-show="$route.path !=='/home'" 
+		@click="$router.go(-1)"
+		slot="left">
+		<mt-button>返回</mt-button>
+		</span>
+	</mt-header>
      
 
 		<!-- 底部tabBar -->

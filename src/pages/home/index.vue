@@ -2,7 +2,7 @@
         <div class="home-container">
         <mt-swipe :auto="4000">
             <mt-swipe-item v-for='(item,index) in swipeList' :key='index'>
-                <!-- 这里后台没有id返回  所以用index坐唯一值  要在组件的data中声明一下 -->
+                <!-- 这里后台没有id返回  所以用index做唯一值  要在组件的data中声明一下 -->
                 <router-link to="#">
                     <img :src="item.img">
                 </router-link>

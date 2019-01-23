@@ -9,7 +9,7 @@ export default  {
         state.car.some(item=>{
             if(item.id == appshopCar.id){
                 //说明同一个id 的商品已存在
-                item.count += appshopCar.count
+                item.count += parseInt(appshopCar.count)
                 isFound = true
                 return true
             }
@@ -20,5 +20,32 @@ export default  {
         //4.将car购物车信息存储到本地,键 值的形式
         localStorage.setItem('car',JSON.stringify(state.car))
 
+    },
+    updateGoodsSelected(state,appshopCar){
+        state.car.some(item=>{
+            if(item.id == appshopCar.id){
+                item.selected = appshopCar.selected
+                return true
+            }
+        })
+        localStorage.setItem('car',JSON.stringify(state.car))
+    },
+    updateCarInfo(state,appshopCar){
+        state.car.some(item=>{
+            if(item.id == appshopCar.id){
+                item.count = appshopCar.count
+                return true
+            }
+        }),
+        localStorage.setItem('car',JSON.stringify(state.car))
+    },
+    removeCarCount(state,id){
+        state.car.some(item=>{
+            if(item.id == id){
+                state.car.splice(i,1)
+                return true
+            }
+        }),
+        localStorage.setItem('car',JSON.stringify(state.car))
     }
 }
